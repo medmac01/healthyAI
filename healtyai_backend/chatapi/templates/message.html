@@ -1,0 +1,11 @@
+<form method="post" action="{% url 'get_response' %}">
+    {% csrf_token %}
+    <label for="message">Enter your message:</label><br>
+    <input type="text" id="message" name="message"><br><br>
+    <input type="submit" value="Submit">
+</form>
+{% if response %}
+<h3>Response:</h3>
+<p>{{ response }}</p>
+{% endif %}
+
