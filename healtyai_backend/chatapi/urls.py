@@ -1,8 +1,7 @@
 from django.urls import path
-from .views import get_response, message, login
+from .views import ResponseView
 
 urlpatterns = [
-    path('message/', message, name='message'),
-    path('api/get_response/', get_response, name='get_response'),
+    path('api/get_response/', ResponseView.as_view(), name='get_response'),
 ]
 
