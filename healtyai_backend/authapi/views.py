@@ -20,9 +20,9 @@ class LoginView(APIView):
         user = CustomUser()
 
         if user.login(email,password):
-            return Response({'message': 'Logged in successfully.'})
+            return Response({'success': True})
         else:
-            return Response({'message': 'Invalid credentials.'}, status=status.HTTP_401_UNAUTHORIZED)
+            return Response({'success': False}, status=status.HTTP_401_UNAUTHORIZED)
 
         # serializer = ReactSerializer(data=request.data)
         # if serializer.is_valid():
