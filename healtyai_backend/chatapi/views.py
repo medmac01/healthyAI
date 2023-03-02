@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from django.http import JsonResponse
 import openai
 
-openai.api_key = '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'
+openai.api_key = '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'
 
 import redis
 
@@ -19,6 +19,7 @@ class ResponseView(APIView):
     def post(self,request):
         prompt = request.data.get('message')
         print(str(prompt))
+        print(type(prompt))
         response = openai.Completion.create(
             engine="text-davinci-003",
             # prompt= 'give me in bullet points 5 home remedies for ' + prompt,
@@ -33,60 +34,40 @@ class ResponseView(APIView):
         }
         return Response(context)
 
-# def get_response(request):
-#     if request.method == 'POST':
-#         prompt = request.POST.get('message')
-#         response = openai.Completion.create(
-#             engine="text-davinci-003",
-#             # prompt= 'give me in bullet points 5 home remedies for ' + prompt,
-#             prompt= 'give me in bullet points top 5 reasons for ' + prompt,
-#             max_tokens=1024,
-#             n=1,
-#             stop=None,
-#             temperature=0.1,
-#         )
-#         context = {
-#             'response': response.choices[0].text,
-#         }
-#         print(response.choices)
-#         return render(request, 'message.html', context)
+
+class RemediesView(APIView):
+    def post(self,request):
+        prompt = request.data.get('message')
+        print(str(prompt))
+        print(type(prompt))
+        response = openai.Completion.create(
+            engine="text-davinci-003",
+            prompt= 'give me five remedies for' + str(prompt),
+            max_tokens=1024,
+            n=1,
+            stop=None,
+            temperature=0.1,
+        )
+        context = {
+            'response': response.choices[0].text,
+        }
+        return Response(context)
 
 
-# def message(request):
-#     return render(request, 'message.html')
-
-
-# def login(request):
-#     if request.method == 'POST':
-#         fullname = request.POST['fullname']
-#         age = request.POST['age']
-#         email = request.POST['email']
-#         password = request.POST['password']
-#         gender = request.POST['gender']
-#         allergies = request.POST['allergies']
-#         phobias = request.POST['phobias']
-#         smoker = request.POST.get('smoker', 'No')
-#         pregnant = request.POST.get('pregnant', 'No')
-#         drinker = request.POST.get('drinker', 'No')
-
-#         user = {
-#             'fullname': fullname,
-#             'age': age,
-#             'email': email,
-#             'password': password,
-#             'gender': gender,
-#             'allergies': allergies,
-#             'phobias': phobias,
-#             'smoker': smoker,
-#             'pregnant': pregnant,
-#             'drinker': drinker
-#         }
-
-#         # Store user data in Redis database
-#         for key, value in user.items():
-#             r.hset(email, key, value)
-#         print(r.get('ayoub'))
-
-#         return redirect('symptoms')
-
-#     return render(request, 'login.html')
+class DiseaseInfoView(APIView):
+    def post(self,request):
+        prompt = request.data.get('message')
+        print(str(prompt))
+        print(type(prompt))
+        response = openai.Completion.create(
+            engine="text-davinci-003",
+            prompt= 'give me some info about ' + str(prompt),
+            max_tokens=1024,
+            n=1,
+            stop=None,
+            temperature=0.1,
+        )
+        context = {
+            'response': response.choices[0].text,
+        }
+        return Response(context)
