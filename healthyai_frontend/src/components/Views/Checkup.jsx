@@ -1,11 +1,14 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-const Checkup = () => {
+import { useNavigate } from 'react-router-dom';
+const Checkup = ({ setAcceptResponseFromCheckup }) => {
     const [isValidated, setIsValidated] = useState(false)
     const [severity, setSeverity] = useState("");
     const [duration, setDuration] = useState("A few hours");
     const [frequency, setFrequency] = useState("All the time");
     const [prompt, setPrompt] = useState("");
+    const [apiResponse, setApiResponse] = useState();
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (severity !== "" && prompt !== "") {
@@ -18,6 +21,8 @@ const Checkup = () => {
 
     const validateForm = async (e) => {
         e.preventDefault();
+
+
         const checkupData = {
             message: prompt
         }
@@ -26,19 +31,19 @@ const Checkup = () => {
             const checkupFetch = await fetch("http://127.0.0.1:8000/api/get_response/", {
                 method: 'POST',
                 headers: {
-                  'Origin': 'http://localhost:3000',
-                  'Content-Type': 'application/json'
+                    'Origin': 'http://localhost:3000',
+                    'Content-Type': 'application/json'
                 },
                 credentials: 'include',
                 body: JSON.stringify({
                     "message": checkupData,
-                  })
-              }).then(response => response.json())
-              .then(data => {
-                console.log(data); // or do something else with the data
-              })
-            // const checkupFetchJson = checkupFetch.json();
-            console.log(checkupFetch);
+                })
+            })
+                .then(response => response.json())
+
+            // setApiResponse(checkupFetch)
+            setAcceptResponseFromCheckup(checkupFetch)
+            navigate("/response")
         }
         catch (error) {
             console.log(error);
