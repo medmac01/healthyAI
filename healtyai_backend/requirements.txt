@@ -1,0 +1,10 @@
+Django==4.1.7 
+ django-cors-headers==3.14.0 
+ django-redis==5.2.0 
+ djangorestframework==3.14.0 
+ frozenlist==1.3.3 
+ idna==3.4 
+ multidict==6.0.4 
+ openai==0.27.0 
+ pytz==2022.7.1 
+ redis==4.5.1

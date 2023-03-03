@@ -15,7 +15,7 @@ const Signup = () => {
     const [conditionSmoker, setConditionSmoker] = useState(false);
     const [conditionDrinker, setConditionDrinker] = useState(false);
 
-    const validateForm = (e) => {
+    const validateForm = async (e) => {
         e.preventDefault();
         const newUserData = {
             name: name,
@@ -29,7 +29,17 @@ const Signup = () => {
             smoker: conditionSmoker,
             drinker: conditionDrinker
         }
-        console.log(newUserData);
+
+        try {
+            const validation = await fetch("http://127.0.0.1:8000/api/signup");
+            const userData = validation.json()
+            // console.log(userData);
+        }
+        catch (error) {
+            console.log(error);
+        }
+
+
     }
 
     useEffect(() => {
@@ -52,6 +62,7 @@ const Signup = () => {
             }
         }
     }, [name, age, gender, email, password])
+
 
 
     return (
@@ -124,9 +135,7 @@ const Signup = () => {
                             </div>
                         </label>
                     </div>
-                    <Link to="/" className="w-full">
-                        <button disabled={!isValidated} className="p-3 bg-primary text-white rounded-lg disabled:opacity-50 max-lg:w-full">CREATE ACCOUNT</button>
-                    </Link>
+                    <button type="submit" disabled={!isValidated} className="p-3 bg-primary text-white rounded-lg disabled:opacity-50 max-lg:w-full">CREATE ACCOUNT</button>
                 </form>
             </div>
         </div>
