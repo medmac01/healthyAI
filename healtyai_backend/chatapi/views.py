@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from django.http import JsonResponse
 import openai
 
-openai.api_key = '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'
+openai.api_key = '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'
 
 import redis
 

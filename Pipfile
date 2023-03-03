@@ -9,6 +9,7 @@ openai = "*"
 django-cors-headers = "*"
 redis = "*"
 django-redis = "*"
+requests = "*"
 
 [dev-packages]
 

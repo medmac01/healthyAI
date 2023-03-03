@@ -19,14 +19,24 @@ const Checkup = () => {
     const validateForm = async (e) => {
         e.preventDefault();
         const checkupData = {
-            severity: severity,
-            duration: duration,
-            frequency: frequency,
-            prompt: prompt
+            message: prompt
         }
 
         try {
-            const checkupFetch = await fetch("http://127.0.0.1:8000/api/get_response")
+            const checkupFetch = await fetch("http://127.0.0.1:8000/api/get_response/", {
+                method: 'POST',
+                headers: {
+                  'Origin': 'http://localhost:3000',
+                  'Content-Type': 'application/json'
+                },
+                credentials: 'include',
+                body: JSON.stringify({
+                    "message": checkupData,
+                  })
+              }).then(response => response.json())
+              .then(data => {
+                console.log(data); // or do something else with the data
+              })
             // const checkupFetchJson = checkupFetch.json();
             console.log(checkupFetch);
         }
