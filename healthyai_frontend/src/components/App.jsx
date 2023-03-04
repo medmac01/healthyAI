@@ -11,22 +11,15 @@ const App = () => {
   const [authenticated, setAuthenticated] = useState(true)
   const navigate = useNavigate();
   const [acceptResponseFromCheckup, setAcceptResponseFromCheckup] = useState()
+  const [acceptRemediesResponseFromCheckup, setAcceptRemediesResponseFromCheckup] = useState()
 
-  // useEffect(() => {
-  //   if (authenticated) {
-  //     navigate("/")
-  //   }
-  //   else {
-  //     navigate("/login")
-  //   }
-  // }, [authenticated])
   return (
     <Routes>
       <Route path="/" element={<AppView />}></Route>
       <Route path="/login" element={<Login />}></Route>
       <Route path="/signup" element={<Signup />}></Route>
-      <Route path="/checkup" element={<Checkup setAcceptResponseFromCheckup={setAcceptResponseFromCheckup} />}></Route>
-      <Route path="response" element={<Response response={acceptResponseFromCheckup} />}></Route>
+      <Route path="/checkup" element={<Checkup setAcceptResponseFromCheckup={setAcceptResponseFromCheckup} setAcceptRemediesResponseFromCheckup={setAcceptRemediesResponseFromCheckup} />}></Route>
+      <Route path="response" element={<Response response={acceptResponseFromCheckup} remedies={acceptRemediesResponseFromCheckup} />}></Route>
     </Routes>
   )
 }

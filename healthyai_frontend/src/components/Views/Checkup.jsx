@@ -1,13 +1,13 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
-const Checkup = ({ setAcceptResponseFromCheckup }) => {
+const Checkup = ({ setAcceptResponseFromCheckup, setAcceptRemediesResponseFromCheckup }) => {
     const [isValidated, setIsValidated] = useState(false)
     const [severity, setSeverity] = useState("");
     const [duration, setDuration] = useState("A few hours");
     const [frequency, setFrequency] = useState("All the time");
     const [prompt, setPrompt] = useState("");
-    const [apiResponse, setApiResponse] = useState();
+    // const [apiResponse, setApiResponse] = useState();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -26,23 +26,23 @@ const Checkup = ({ setAcceptResponseFromCheckup }) => {
         const checkupData = {
             message: prompt
         }
-
-        try {
-            const checkupFetch = await fetch("http://127.0.0.1:8000/api/get_response/", {
-                method: 'POST',
-                headers: {
-                    'Origin': 'http://localhost:3000',
-                    'Content-Type': 'application/json'
-                },
-                credentials: 'include',
-                body: JSON.stringify({
-                    "message": checkupData,
-                })
+        const options = {
+            method: 'POST',
+            headers: {
+                'Origin': 'http://localhost:3000',
+                'Content-Type': 'application/json'
+            },
+            credentials: 'include',
+            body: JSON.stringify({
+                "message": checkupData,
             })
-                .then(response => response.json())
-
+        }
+        try {
+            const checkupFetch = await fetch("http://127.0.0.1:8000/api/get_response/", options).then(response => response.json())
+            const remediesFetch = await fetch("http://127.0.0.1:8000/api/get_remedies/", options).then((response => response.json()))
             // setApiResponse(checkupFetch)
             setAcceptResponseFromCheckup(checkupFetch)
+            setAcceptRemediesResponseFromCheckup(remediesFetch)
             navigate("/response")
         }
         catch (error) {
@@ -93,7 +93,7 @@ const Checkup = ({ setAcceptResponseFromCheckup }) => {
                         </select>
                     </div>
                     <div>
-                        <textarea onChange={(e) => setPrompt(e.target.value)} value={prompt} placeholder='Describe in your own words, be as precise and descriptive as possible!' name="prompt" id="" cols="80" rows="10" className='placeholder:italic placeholder:text-slate-400 block bg-white border border-slate-300 w-full rounded-md py-3 pl-2 pr-3 shadow-sm focus:outline-none focus:border-primary focus:ring-primary focus:ring-1 sm:text-sm resize-none'></textarea>
+                        <textarea onChange={(e) => setPrompt(e.target.value)} value={prompt} placeholder='Describe in your own words, be as precise and descriptive as possible!' name="prompt" id="" cols="200" rows="10" className='placeholder:italic placeholder:text-slate-400 block bg-white border border-slate-300 w-full rounded-md py-3 pl-2 pr-3 shadow-sm focus:outline-none focus:border-primary focus:ring-primary focus:ring-1 sm:text-sm resize-none'></textarea>
                     </div>
                     <button disabled={!isValidated} className="p-3 bg-primary text-white rounded-lg w-full disabled:opacity-50 max-lg:w-full">CHECK</button>
                 </div>
