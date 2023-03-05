@@ -8,18 +8,19 @@ import Response from './Views/Response/Response'
 
 const App = () => {
 
-  const [authenticated, setAuthenticated] = useState(true)
+  // const [authenticated, setAuthenticated] = useState(true)
   const navigate = useNavigate();
   const [acceptResponseFromCheckup, setAcceptResponseFromCheckup] = useState()
   const [acceptRemediesResponseFromCheckup, setAcceptRemediesResponseFromCheckup] = useState()
+  const [acceptDiseaseResponseFromCheckup, setDiseaseRemediesResponseFromCheckup] = useState()
 
   return (
     <Routes>
       <Route path="/" element={<AppView />}></Route>
       <Route path="/login" element={<Login />}></Route>
       <Route path="/signup" element={<Signup />}></Route>
-      <Route path="/checkup" element={<Checkup setAcceptResponseFromCheckup={setAcceptResponseFromCheckup} setAcceptRemediesResponseFromCheckup={setAcceptRemediesResponseFromCheckup} />}></Route>
-      <Route path="response" element={<Response response={acceptResponseFromCheckup} remedies={acceptRemediesResponseFromCheckup} />}></Route>
+      <Route path="/checkup" element={<Checkup setAcceptResponseFromCheckup={setAcceptResponseFromCheckup} setAcceptRemediesResponseFromCheckup={setAcceptRemediesResponseFromCheckup} setDiseaseRemediesResponseFromCheckup={setDiseaseRemediesResponseFromCheckup} />}></Route>
+      <Route path="response" element={<Response response={acceptResponseFromCheckup} remedies={acceptRemediesResponseFromCheckup} info={acceptDiseaseResponseFromCheckup} />}></Route>
     </Routes>
   )
 }
