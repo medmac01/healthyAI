@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
-const Checkup = ({ setAcceptResponseFromCheckup, setAcceptRemediesResponseFromCheckup }) => {
+const Checkup = ({ setAcceptResponseFromCheckup, setAcceptRemediesResponseFromCheckup, setDiseaseRemediesResponseFromCheckup }) => {
     const [isValidated, setIsValidated] = useState(false)
     const [severity, setSeverity] = useState("");
     const [duration, setDuration] = useState("A few hours");
@@ -40,9 +40,11 @@ const Checkup = ({ setAcceptResponseFromCheckup, setAcceptRemediesResponseFromCh
         try {
             const checkupFetch = await fetch("http://127.0.0.1:8000/api/get_response/", options).then(response => response.json())
             const remediesFetch = await fetch("http://127.0.0.1:8000/api/get_remedies/", options).then((response => response.json()))
+            const diseaseFetch = await fetch("http://127.0.0.1:8000/api/get_disease_info/", options).then((response => response.json()))
             // setApiResponse(checkupFetch)
             setAcceptResponseFromCheckup(checkupFetch)
             setAcceptRemediesResponseFromCheckup(remediesFetch)
+            setDiseaseRemediesResponseFromCheckup(diseaseFetch)
             navigate("/response")
         }
         catch (error) {
