@@ -10,6 +10,7 @@ django-cors-headers = "*"
 redis = "*"
 django-redis = "*"
 requests = "*"
+langchain = "*"
 
 [dev-packages]
 

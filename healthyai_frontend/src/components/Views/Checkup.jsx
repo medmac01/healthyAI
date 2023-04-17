@@ -24,7 +24,9 @@ const Checkup = ({ setAcceptResponseFromCheckup, setAcceptRemediesResponseFromCh
 
 
         const checkupData = {
-            message: prompt
+            message: prompt,
+            sev: severity,
+            duration: duration
         }
         const options = {
             method: 'POST',
